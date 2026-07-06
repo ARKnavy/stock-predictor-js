@@ -1,56 +1,81 @@
-// finnhubClient.js
-// This file sets up the Finnhub API client and exports helper functions
-// to fetch stock data. Other files (like index.js) import from here.
-
-// Load environment variables from .env so we can read FINNHUB_API_KEY
+// finnhubClient.js - Finnhub API helper functions
 require('dotenv').config();
-
-// Import the official Finnhub JavaScript SDK
 const finnhub = require('finnhub');
 
-// --- Configure the Finnhub client with our API key ---
-// The SDK uses a global ApiClient with an auth object.
+// Configure the Finnhub SDK with our API key
 const apiClient = finnhub.ApiClient.instance;
 const auth = apiClient.authentications['api_key'];
-auth.apiKey = process.env.FINNHUB_API_KEY; // read from .env
+auth.apiKey = process.env.FINNHUB_API_KEY;
 
-// Create one reusable instance of the DefaultApi
-const finnhubClient = new finnhub.DefaultApi();
+const client = new finnhub.DefaultApi();
 
-/**
- * getQuote(symbol)
- * Fetches real-time quote data for a stock symbol from Finnhub.
- *
- * @param {string} symbol - Stock ticker, e.g. "AAPL", "TSLA"
- * @returns {Promise<Object>} - Resolves with a clean quote object:
- *   { symbol, current, high, low, open, prev_close }
- */
+// ─── getQuote(symbol) ─────────────────────────────────────────────────────────────
+// Fetches real-time quote: current, high, low, open, prev_close
 function getQuote(symbol) {
   return new Promise((resolve, reject) => {
-    // Call the Finnhub /quote endpoint
-    finnhubClient.quote(symbol, (error, data, response) => {
+    client.quote(symbol, (error, data) => {
       if (error) {
-        // Log the error and reject the Promise so the caller can handle it
-        console.error(`[Finnhub] Error fetching quote for ${symbol}:`, error.message);
+        console.error(`[Finnhub] Quote error for ${symbol}:`, error.message);
         return reject(error);
       }
-
-      // Finnhub returns: c=current, h=high, l=low, o=open, pc=prev_close
-      // We rename them to friendlier keys before returning
-      const quote = {
-        symbol:     symbol.toUpperCase(),
-        current:    data.c,   // current price
-        high:       data.h,   // day high
-        low:        data.l,   // day low
-        open:       data.o,   // opening price
-        prev_close: data.pc,  // previous close
-      };
-
-      console.log(`[Finnhub] Got quote for ${symbol}: $${data.c}`);
-      resolve(quote);
+      resolve({
+        symbol: symbol.toUpperCase(),
+        current:    data.c,
+        high:       data.h,
+        low:        data.l,
+        open:       data.o,
+        prev_close: data.pc,
+      });
     });
   });
 }
 
-// Export the function so index.js (and any future files) can use it
-module.exports = { getQuote };
+// ─── getCandles(symbol, resolution, from, to) ─────────────────────────────────────
+// Fetches OHLC candlestick data for price charting
+// resolution: '1','5','15','30','60','D','W','M'
+// from/to: Unix timestamps
+function getCandles(symbol, resolution, from, to) {
+  return new Promise((resolve, reject) => {
+    client.stockCandles(symbol, resolution, from, to, {}, (error, data) => {
+      if (error) {
+        console.error(`[Finnhub] Candle error for ${symbol}:`, error.message);
+        return reject(error);
+      }
+      if (data.s !== 'ok') {
+        // Finnhub returns s:'no_data' if no data is available
+        return resolve({ symbol, timestamps: [], close: [], open: [], high: [], low: [], volume: [] });
+      }
+      resolve({
+        symbol: symbol.toUpperCase(),
+        timestamps: data.t,  // Unix timestamps
+        close:      data.c,  // Close prices
+        open:       data.o,  // Open prices
+        high:       data.h,  // Highs
+        low:        data.l,  // Lows
+        volume:     data.v,  // Volume
+      });
+    });
+  });
+}
+
+// ─── searchSymbol(query) ────────────────────────────────────────────────────────────
+// Searches for stocks by company name or symbol
+// Returns top 10 US stock matches
+function searchSymbol(query) {
+  return new Promise((resolve, reject) => {
+    client.symbolSearch(query, (error, data) => {
+      if (error) {
+        console.error(`[Finnhub] Search error for "${query}":`, error.message);
+        return reject(error);
+      }
+      // Filter to US common stocks only, return top 10
+      const results = (data.result || [])
+        .filter(r => r.type === 'Common Stock' && !r.symbol.includes('.'))
+        .slice(0, 10)
+        .map(r => ({ symbol: r.symbol, name: r.description }));
+      resolve(results);
+    });
+  });
+}
+
+module.exports = { getQuote, getCandles, searchSymbol };
