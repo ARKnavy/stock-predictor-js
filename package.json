@@ -1,0 +1,17 @@
+{
+  "name": "stock-predictor-js",
+  "version": "1.0.0",
+  "description": "Node.js backend for a stock market predictor using Finnhub API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["stocks", "finnhub", "express"],
+  "author": "ARKnavy",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "finnhub": "^1.2.14"
+  }
+}
