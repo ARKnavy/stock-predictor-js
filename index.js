@@ -34,9 +34,9 @@ app.get('/api/quote', async (req, res) => {
 // ─── ROUTE: GET /api/quotes ──────────────────────────────────────────────────
 app.get('/api/quotes', async (req, res) => {
   try {
-    const quotes = await Promise.all(DEFAULT_SYMBOLS.map(s => getQuote(s)));
-    res.json(quotes);
-  } catch (err) {
+        const quotes = await Promise.all(DEFAULT_SYMBOLS.map(s => getQuote(s)));
+    const withChanges = quotes.map(q => ({...q, change_pct: q.prev_close > 0 ? ((q.current - q.prev_close) / q.prev_close) * 100 : 0 }));
+    res.json(withChanges);catch (err) {
     res.status(500).json({ error: 'Failed to fetch quotes' });
   }
 });
