@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stock Predictor AI - Smart Investment Advisor</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff;min-height:100vh;padding:20px}.container{max-width:1400px;margin:0 auto}header{text-align:center;margin-bottom:30px}h1{font-size:2.5rem;margin-bottom:10px;background:linear-gradient(45deg,#00f5ff,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent}header p{color:#aaa;font-size:1.1rem}.tabs{display:flex;gap:10px;justify-content:center;margin-bottom:30px;flex-wrap:wrap}.tab{background:rgba(255,255,255,.1);border:2px solid transparent;padding:12px 25px;border-radius:25px;cursor:pointer;transition:all .3s}.tab:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}.tab.active{background:linear-gradient(45deg,#00f5ff,#00ff88);color:#000;font-weight:bold;border-color:#00ff88}.panel{display:none;animation:fadeIn .5s}.panel.active{display:block}@keyframes fadeIn{from{opacity:0}to{opacity:1}}.card{background:rgba(255,255,255,.05);backdrop-filter:blur(10px);border-radius:15px;padding:25px;margin-bottom:20px;border:1px solid rgba(255,255,255,.1)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}.stock-card{background:linear-gradient(135deg,rgba(0,245,255,.1),rgba(0,255,136,.1));border:2px solid rgba(0,255,136,.3);border-radius:12px;padding:20px;transition:all .3s}.stock-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,255,136,.3)}.stock-symbol{font-size:1.8rem;font-weight:bold;margin-bottom:10px}.stock-price{font-size:2rem;margin:10px 0}.positive{color:#00ff88}.negative{color:#ff4757}.signal{background:rgba(0,0,0,.3);padding:8px 12px;border-radius:20px;font-size:0.9rem;margin:5px 0;display:inline-block}.rating{display:inline-block;padding:8px 16px;border-radius:20px;font-weight:bold;margin-top:10px}.rating.strong-buy{background:linear-gradient(45deg,#00ff88,#00d66e);color:#000}.rating.buy{background:#00ff88;color:#000}.rating.hold{background:#ffa502;color:#000}.rating.caution{background:#ff6348;color:#fff}.rating.avoid{background:#ff4757;color:#fff}input,select,button{background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);color:#fff;padding:12px 20px;border-radius:8px;font-size:1rem;margin:5px}input::placeholder{color:#888}button{background:linear-gradient(45deg,#00f5ff,#00ff88);color:#000;font-weight:bold;cursor:pointer;transition:all .3s;border:none}button:hover{transform:scale(1.05);box-shadow:0 5px 20px rgba(0,255,136,.5)}button:active{transform:scale(0.98)}.loading{text-align:center;padding:40px}.loading::after{content:'';display:inline-block;width:40px;height:40px;border:4px solid rgba(255,255,255,.2);border-top-color:#00ff88;border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.error{background:rgba(255,71,87,.2);border:2px solid #ff4757;padding:15px;border-radius:8px;margin:10px 0}.recommendation-card{background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(255,165,0,.1));border:3px solid gold;padding:25px;border-radius:15px;margin:20px 0}.rank{display:inline-block;background:gold;color:#000;font-weight:bold;padding:5px 15px;border-radius:50%;margin-right:10px}.search-results{max-height:300px;overflow-y:auto}.search-item{padding:12px;background:rgba(255,255,255,.05);margin:5px 0;border-radius:8px;cursor:pointer;transition:all .2s}.search-item:hover{background:rgba(0,255,136,.2);transform:translateX(5px)}@media(max-width:768px){h1{font-size:2rem}.grid{grid-template-columns:1fr}.tabs{flex-direction:column}}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);color:#fff;min-height:100vh;padding:20px}.container{max-width:1400px;margin:0 auto}header{text-align:center;margin-bottom:30px}h1{font-size:2.5rem;margin-bottom:10px;background:linear-gradient(45deg,#00f5ff,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent}header p{color:#aaa;font-size:1.1rem}.tabs{display:flex;gap:10px;justify-content:center;margin-bottom:30px;flex-wrap:wrap}.tab{background:rgba(255,255,255,.1);border:2px solid transparent;padding:12px 25px;border-radius:25px;cursor:pointer;transition:all .3s}.tab:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}.tab.active{background:linear-gradient(135deg,rgba(0,245,255,.2),rgba(0,255,136,.2));border-color:#00ff88}.panel{display:none}.panel.active{display:block}.card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:30px;border-radius:15px;margin-bottom:20px}h2{margin-bottom:20px;color:#00f5ff}input,select,button{width:100%;padding:12px;margin:10px 0;border:2px solid rgba(0,255,136,.3);background:rgba(0,0,0,.3);color:#fff;border-radius:8px;font-size:1rem}button{background:linear-gradient(135deg,#00f5ff,#00ff88);color:#000;font-weight:bold;cursor:pointer;transition:all .3s;border:none}button:hover{transform:translateY(-2px);box-shadow:0 5px 20px rgba(0,255,136,.4)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}.stock-card{background:linear-gradient(135deg,rgba(0,245,255,.1),rgba(0,255,136,.1));border:2px solid rgba(0,255,136,.3);border-radius:12px;padding:20px;transition:all .3s;position:relative}.stock-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,255,136,.3)}.stock-symbol{font-size:1.8rem;font-weight:bold;margin-bottom:10px}.stock-price{font-size:2rem;margin:10px 0}.positive{color:#00ff88}.negative{color:#ff4757}.signal{background:rgba(0,0,0,.3);padding:8px 12px;border-radius:20px;font-size:0.9rem;margin:5px 0;display:inline-block}.rating{display:inline-block;padding:8px 16px;border-radius:20px;font-weight:bold;margin-top:10px}.rating.strong-buy{background:linear-gradient(45deg,#00ff88,#00d66e);color:#000}.rating.buy{background:#00ff88;color:#000}.rating.hold{background:#ffa502;color:#000}.rating.sell{background:#ff4757;color:#fff}.rating.strong-sell{background:linear-gradient(45deg,#ff4757,#d63031);color:#fff}.loading{border:4px solid rgba(255,255,255,.1);border-top:4px solid #00ff88;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;margin:20px auto}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.error{background:rgba(255,71,87,.2);border:2px solid #ff4757;padding:15px;border-radius:8px;margin:10px 0}.search-results{max-height:400px;overflow-y:auto;margin-top:10px}.search-item{background:rgba(255,255,255,.05);padding:15px;margin:5px 0;border-radius:8px;cursor:pointer;transition:all .2s}.search-item:hover{background:rgba(0,255,136,.2);transform:translateX(5px)}.remove-btn{position:absolute;top:10px;right:10px;background:#ff4757;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;font-size:0.8rem;width:auto}.remove-btn:hover{background:#d63031}.add-stock-section{margin-top:20px;padding:20px;background:rgba(255,255,255,.03);border-radius:10px}@media(max-width:768px){h1{font-size:2rem}.grid{grid-template-columns:1fr}.tabs{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -23,6 +23,10 @@
 <div id="dashboard" class="panel active">
 <div class="card">
 <h2>Live Watchlist</h2>
+<div class="add-stock-section">
+<input type="text" id="add-stock-input" placeholder="Enter symbol to add (e.g., AAPL)" style="width:70%;display:inline-block">
+<button onclick="addToWatchlist()" style="width:28%;display:inline-block;margin-left:2%">Add Stock</button>
+</div>
 <div class="grid" id="watchlist-grid"></div>
 </div>
 </div>
@@ -33,8 +37,8 @@
 <option value="short">Short Term (1 week) - Momentum Focus</option>
 <option value="medium" selected>Medium Term (1 month) - Balanced</option>
 <option value="long">Long Term (1 year+) - Stability Focus</option>
-</select>
-<br><label>Or Target Date:</label>
+</select><br>
+<label>Or Target Date:</label>
 <input type="date" id="targetDate" min="2026-07-07">
 <button onclick="getRecommendation()">Get Smart Recommendation</button>
 <div id="recommendation-output"></div>
@@ -50,70 +54,156 @@
 <div id="analyze" class="panel">
 <div class="card">
 <h2>Analyze a Stock</h2>
-<input type="text" id="analyzeSymbol" placeholder="Enter symbol (e.g., AAPL)" style="width:200px">
-<button onclick="analyzeStock()">Analyze</button>
+<input type="text" id="analyzeSymbol" placeholder="Enter stock symbol (e.g., AAPL)">
+<button onclick="analyzeStock()">Analyze Stock</button>
 <div id="analyze-output"></div>
 </div>
 </div>
 </div>
 <script>
-const API='/api';document.querySelectorAll('.tab').forEach(tab=>{
+const API='';
+let watchlistSymbols=['AAPL','MSFT','TSLA','GOOGL','AMZN','NVDA','META','NFLX'];
+let refreshInterval=null;
+
+document.querySelectorAll('.tab').forEach(tab=>{
 tab.addEventListener('click',()=>{
-document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));tab.classList.add('active');document.getElementById(tab.dataset.panel).classList.add('active')})});async function fetchAPI(url){
-const res=await fetch(url);if(!res.ok)throw new Error('API failed');return res.json()}
-function formatPrice(p){return'$'+parseFloat(p).toFixed(2)}
-function formatPct(p){return(p>=0?'+':'')+p.toFixed(2)+'%'}
-function createStockCard(s){
-const changeClass=s.change_pct>=0?'positive':'negative';return`
-<div class="stock-card">
-<div class="stock-symbol">${s.symbol}</div>
-<div class="stock-price ${changeClass}">${formatPrice(s.current)}<br><span style="font-size:1rem">${formatPct(s.change_pct)}</span></div>
-<div style="color:#aaa;font-size:0.9rem">H: ${formatPrice(s.high)} | L: ${formatPrice(s.low)}</div>
-${s.rating?`<div class="rating ${s.rating.toLowerCase().replace(' ','-')}">${s.rating}</div>`:''}
-${s.signals?s.signals.map(sig=>`<div class="signal">${sig}</div>`).join(''):''}  
-</div>`}
-async function loadDashboard(){
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+tab.classList.add('active');
+const panelId=tab.dataset.panel;
+document.getElementById(panelId).classList.add('active');
+});
+});
+
+function switchToAnalyze(symbol){
+document.getElementById('analyzeSymbol').value=symbol;
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+document.querySelector('[data-panel="analyze"]').classList.add('active');
+document.getElementById('analyze').classList.add('active');
+}
+
+async function fetchAPI(url){
+const res=await fetch(url);
+if(!res.ok)throw new Error('API request failed');
+return res.json();
+}
+
+function formatPrice(p){return p?`$${p.toFixed(2)}`:'-'}
+function formatPct(p){return p?`${p>0?'+':''}${p.toFixed(2)}%`:'-'}
+
+async function loadWatchlist(){
+const grid=document.getElementById('watchlist-grid');
+grid.innerHTML='<div class="loading"></div>';
 try{
-const data=await fetchAPI(`${API}/quotes`);const grid=document.getElementById('watchlist-grid');grid.innerHTML=data.map(createStockCard).join('')}catch(e){
-document.getElementById('watchlist-grid').innerHTML=`<div class="error">Failed to load watchlist: ${e.message}</div>`}}
-loadDashboard();setInterval(loadDashboard,30000);async function getRecommendation(){
-const horizon=document.getElementById('horizon').value;const targetDate=document.getElementById('targetDate').value||'';const out=document.getElementById('recommendation-output');out.innerHTML='<div class="loading"></div>';try{
-const url=`${API}/recommend?horizon=${horizon}${targetDate?'&targetDate='+targetDate:''}`;const data=await fetchAPI(url);const top=data.top;out.innerHTML=`
-<div class="recommendation-card">
-<h2>🏆 Top Pick: ${top.symbol}</h2>
-<div class="stock-price positive">${formatPrice(top.current)}</div>
-<p><strong>Composite Score:</strong> ${top.compositeScore}/100</p>
-<p><strong>Projected Return (${data.daysToTarget} days):</strong> <span class="${top.projectedReturn>=0?'positive':'negative'}">${formatPct(top.projectedReturn)}</span></p>
-<p><strong>Projected Price:</strong> ${formatPrice(top.projectedPrice)}</p>
-${top.signals.map(s=>`<div class="signal">${s}</div>`).join('')}
+const quotes=await Promise.all(watchlistSymbols.map(s=>fetchAPI(`${API}/api/quote?symbol=${s}`)));
+grid.innerHTML=quotes.map((q,i)=>`
+<div class="stock-card" onclick="switchToAnalyze('${watchlistSymbols[i]}')" style="cursor:pointer">
+<button class="remove-btn" onclick="event.stopPropagation();removeFromWatchlist('${watchlistSymbols[i]}')">✕ Remove</button>
+<div class="stock-symbol">${watchlistSymbols[i]}</div>
+<div class="stock-price ${q.dp>=0?'positive':'negative'}">${formatPrice(q.c)}<br><span style="font-size:1rem">${formatPct(q.dp)}</span></div>
+<div style="margin-top:10px;font-size:0.9rem;color:#aaa">
+<div>Open: ${formatPrice(q.o)} | High: ${formatPrice(q.h)}</div>
+<div>Low: ${formatPrice(q.l)} | Prev: ${formatPrice(q.pc)}</div>
+</div>
+</div>
+`).join('');
+}catch(e){
+grid.innerHTML=`<div class="error">Failed to load watchlist: ${e.message}</div>`;
+}
+}
+
+function addToWatchlist(){
+const input=document.getElementById('add-stock-input');
+const symbol=input.value.trim().toUpperCase();
+if(!symbol){alert('Please enter a stock symbol');return;}
+if(watchlistSymbols.includes(symbol)){alert('Stock already in watchlist');return;}
+watchlistSymbols.push(symbol);
+input.value='';
+loadWatchlist();
+}
+
+function removeFromWatchlist(symbol){
+if(confirm(`Remove ${symbol} from watchlist?`)){
+watchlistSymbols=watchlistSymbols.filter(s=>s!==symbol);
+loadWatchlist();
+}
+}
+
+async function getRecommendation(){
+const horizon=document.getElementById('horizon').value;
+const out=document.getElementById('recommendation-output');
+out.innerHTML='<div class="loading"></div>';
+try{
+const data=await fetchAPI(`${API}/api/recommend?horizon=${horizon}`);
+out.innerHTML=`
+<h3 style="margin-top:20px">🎯 Top Pick: ${data.top.symbol}</h3>
+<div class="stock-card" style="max-width:500px;margin:20px auto">
+<div class="stock-symbol">${data.top.symbol}</div>
+<div class="stock-price ${data.top.change_pct>=0?'positive':'negative'}">${formatPrice(data.top.current)}<br><span style="font-size:1rem">${formatPct(data.top.change_pct)}</span></div>
+<div class="rating ${data.top.rating.toLowerCase().replace(' ','-')}">${data.top.rating}</div>
+<p style="margin-top:15px"><strong>Score:</strong> ${data.top.compositeScore}/100</p>
+<p><strong>Projected Return:</strong> <span class="${data.top.projectedReturn>=0?'positive':'negative'}">${formatPct(data.top.projectedReturn)}</span></p>
+<div style="margin-top:15px">${data.top.signals.map(s=>`<div class="signal">${s}</div>`).join('')}</div>
 </div>
 <h3 style="margin-top:20px">Full Rankings:</h3>
 <div class="grid">${data.all.map(s=>`
 <div class="stock-card">
-<span class="rank">#${s.rank}</span>
+<span class="rank" style="position:absolute;top:10px;left:10px;background:#00f5ff;color:#000;padding:5px 10px;border-radius:50%;font-weight:bold">#${s.rank}</span>
 <span class="stock-symbol">${s.symbol}</span>
 <div class="stock-price ${s.change_pct>=0?'positive':'negative'}">${formatPrice(s.current)}</div>
 <p>Score: ${s.compositeScore}/100</p>
 <p>Projected: <span class="${s.projectedReturn>=0?'positive':'negative'}">${formatPct(s.projectedReturn)}</span></p>
-</div>`).join('')}</div>`}catch(e){
-out.innerHTML=`<div class="error">Recommendation failed: ${e.message}</div>`}}
-let searchTimeout;async function searchStocks(){
-clearTimeout(searchTimeout);const query=document.getElementById('searchInput').value.trim();const out=document.getElementById('search-results');if(!query){out.innerHTML='';return}
+</div>
+`).join('')}</div>
+`;
+}catch(e){
+out.innerHTML=`<div class="error">Recommendation failed: ${e.message}</div>`;
+}
+}
+
+let searchTimeout;
+async function searchStocks(){
+clearTimeout(searchTimeout);
+const query=document.getElementById('searchInput').value.trim();
+const out=document.getElementById('search-results');
+if(!query){out.innerHTML='';return;}
 searchTimeout=setTimeout(async()=>{
 try{
-const data=await fetchAPI(`${API}/search?q=${encodeURIComponent(query)}`);if(!data.results||data.results.length===0){
-out.innerHTML='<div style="padding:20px;color:#888">No results found</div>';return}
-out.innerHTML=data.results.map(r=>`<div class="search-item" onclick="analyzeFromSearch('${r.symbol}')">
+const data=await fetchAPI(`${API}/api/search?q=${encodeURIComponent(query)}`);
+if(!data.results||data.results.length===0){
+out.innerHTML='<div style="padding:20px;color:#888">No results found</div>';
+return;
+}
+out.innerHTML=data.results.map(r=>`
+<div class="search-item" onclick="analyzeFromSearch('${r.symbol}')">
 <div style="font-weight:bold;font-size:1.1rem">${r.symbol}</div>
 <div style="color:#aaa;font-size:0.9rem">${r.name}</div>
-</div>`).join('')}catch(e){
-out.innerHTML=`<div class="error">Search failed: ${e.message}</div>`}},300)}
+</div>
+`).join('');
+}catch(e){
+out.innerHTML=`<div class="error">Search failed: ${e.message}</div>`;
+}
+},300);
+}
+
 function analyzeFromSearch(symbol){
-document.getElementById('analyzeSymbol').value=symbol;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.querySelector('[data-panel="analyze"]').classList.add('active');document.getElementById('analyze').classList.add('active');analyzeStock()}
+document.getElementById('analyzeSymbol').value=symbol;
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+document.querySelector('[data-panel="analyze"]').classList.add('active');
+document.getElementById('analyze').classList.add('active');
+analyzeStock();
+}
+
 async function analyzeStock(){
-const symbol=document.getElementById('analyzeSymbol').value.trim().toUpperCase();const out=document.getElementById('analyze-output');if(!symbol){out.innerHTML='<div class="error">Please enter a symbol</div>';return}
-out.innerHTML='<div class="loading"></div>';try{
-const data=await fetchAPI(`${API}/analyze?symbol=${symbol}`);out.innerHTML=`
+const symbol=document.getElementById('analyzeSymbol').value.trim().toUpperCase();
+const out=document.getElementById('analyze-output');
+if(!symbol){out.innerHTML='<div class="error">Please enter a symbol</div>';return;}
+out.innerHTML='<div class="loading"></div>';
+try{
+const data=await fetchAPI(`${API}/api/analyze?symbol=${symbol}`);
+out.innerHTML=`
 <div class="stock-card" style="max-width:600px;margin:20px auto">
 <div class="stock-symbol">${data.symbol}</div>
 <div class="stock-price ${data.change_pct>=0?'positive':'negative'}">${formatPrice(data.current)}<br><span style="font-size:1rem">${formatPct(data.change_pct)}</span></div>
@@ -127,11 +217,16 @@ const data=await fetchAPI(`${API}/analyze?symbol=${symbol}`);out.innerHTML=`
 <strong>Composite Score:</strong> ${data.compositeScore}/100<br>
 <strong>Volatility:</strong> ${data.range_pct.toFixed(2)}%
 </div>
-<div style="margin-top:15px">
-${data.signals.map(s=>`<div class="signal">${s}</div>`).join('')}
+<div style="margin-top:15px">${data.signals.map(s=>`<div class="signal">${s}</div>`).join('')}</div>
 </div>
-</div>`}catch(e){
-out.innerHTML=`<div class="error">Analysis failed: ${e.message}</div>`}}
+`;
+}catch(e){
+out.innerHTML=`<div class="error">Analysis failed: ${e.message}</div>`;
+}
+}
+
+loadWatchlist();
+refreshInterval=setInterval(loadWatchlist,30000);
 </script>
 </body>
 </html>
