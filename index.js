@@ -115,6 +115,7 @@ app.get('/api/recommend', async (req, res) => {
       current: s.current,
       change_pct: s.change_pct,
       compositeScore: s.compositeScore,
+            rating: s.rating,
       signals: s.signals,
       projectedReturn: estimateReturn(s, days),
       projectedPrice: parseFloat((s.current * (1 + estimateReturn(s, days) / 100)).toFixed(2)),
