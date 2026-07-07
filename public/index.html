@@ -47,6 +47,7 @@
 <div id="search" class="panel">
 <div class="card">
 <h2>Search Stocks</h2>
+  <div style="margin:15px 0;display:flex;gap:10px;flex-wrap:wrap"><button onclick="setFilter('all')" class="filter-btn active" data-filter="all" style="padding:8px 16px;border-radius:20px;border:2px solid #00ff88;background:rgba(0,255,136,.2);color:#fff;cursor:pointer;font-size:0.9rem">All</button><button onclick="setFilter('Common Stock')" class="filter-btn" data-filter="Common Stock" style="padding:8px 16px;border-radius:20px;border:2px solid rgba(0,255,136,.5);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:0.9rem">Stocks</button><button onclick="setFilter('ETF')" class="filter-btn" data-filter="ETF" style="padding:8px 16px;border-radius:20px;border:2px solid rgba(0,255,136,.5);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:0.9rem">ETFs</button><button onclick="setFilter('Mutual Fund')" class="filter-btn" data-filter="Mutual Fund" style="padding:8px 16px;border-radius:20px;border:2px solid rgba(0,255,136,.5);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:0.9rem">Mutual Funds</button><button onclick="setFilter('ADR')" class="filter-btn" data-filter="ADR" style="padding:8px 16px;border-radius:20px;border:2px solid rgba(0,255,136,.5);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:0.9rem">ADRs</button></div>><button onclick="setFilter('stock')" class="filter-btn" data-filter="stock">Stocks</button><button onclick="setFilter('etf')" class="filter-btn" data-filter="etf">ETFs</button><button onclick="setFilter('fund')" class="filter-btn" data-filter="fund">Mutual Funds</button><button onclick="setFilter('adr')" class="filter-btn" data-filter="adr">ADRs</button></div>
 <input type="text" id="searchInput" placeholder="Search by company name or symbol..." oninput="searchStocks()">
 <div id="search-results" class="search-results"></div>
 </div>
@@ -163,6 +164,19 @@ out.innerHTML=`<div class="error">Recommendation failed: ${e.message}</div>`;
 }
 
 let searchTimeout;
+
+  let currentFilter = 'all';
+
+function setFilter(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if(btn.dataset.filter === filter) btn.classList.add('active');
+  });
+  // Re-trigger search if there's a query
+  const input = document.getElementById('searchInput');
+  if(input && input.value.trim()) searchStocks();
+}
 async function searchStocks(){
 clearTimeout(searchTimeout);
 const query=document.getElementById('searchInput').value.trim();
@@ -175,6 +189,19 @@ if(!data.results||data.results.length===0){
 out.innerHTML='<div style="padding:20px;color:#888">No results found</div>';
 return;
 }
+  // Filter results based on currentFilter
+let filteredResults = data.results;
+if(currentFilter !== 'all') {
+  const typeMap = {
+    'stock': 'Common Stock',
+    'etf': 'ETP',
+    'fund': 'Mutual Fund',
+    'adr': 'ADR'
+  };
+  const targetType = typeMap[currentFilter];
+  filteredResults = data.results.filter(r => r.type && r.type.includes(targetType));
+}
+data.results = filteredResults;
 out.innerHTML=data.results.map(r=>`
 <div class="search-item" onclick="analyzeFromSearch('${r.symbol}')">
 <div style="font-weight:bold;font-size:1.1rem">${r.symbol}</div>
