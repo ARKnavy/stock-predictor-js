@@ -47,7 +47,7 @@
 <div id="search" class="panel">
 <div class="card">
 <h2>Search Stocks</h2>
-  <div style="margin:15px 0;display:flex;gap:10px;flex-wrap:wrap"><button onclick="setFilter('all')" class="filter-btn active" data-filter="all" style="padding:8px 16px;border-radius:20px;border:2px solid #00ff88;background:rgba(0,255,136,.2);color:#fff;cursor:pointer;font-size:0.9rem">All</button><button onclick="setFilter('Common Stock')" class="filter-btn" data-filter="Common Stock" style="padding:8px 16px;border-radius:20px;border:2px solid rgba(0,255,136,.5);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:0.9rem">Stocks</button><button onclick="setFilter('ETF')" class="filter-btn" data-filter="ETF" style="padding:8px 16px;border-radius:20px;border:2px solid rgba(0,255,136,.5);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:0.9rem">ETFs</button><button onclick="setFilter('Mutual Fund')" class="filter-btn" data-filter="Mutual Fund" style="padding:8px 16px;border-radius:20px;border:2px solid rgba(0,255,136,.5);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:0.9rem">Mutual Funds</button><button onclick="setFilter('ADR')" class="filter-btn" data-filter="ADR" style="padding:8px 16px;border-radius:20px;border:2px solid rgba(0,255,136,.5);background:rgba(255,255,255,.05);color:#fff;cursor:pointer;font-size:0.9rem">ADRs</button></div>><button onclick="setFilter('stock')" class="filter-btn" data-filter="stock">Stocks</button><button onclick="setFilter('etf')" class="filter-btn" data-filter="etf">ETFs</button><button onclick="setFilter('fund')" class="filter-btn" data-filter="fund">Mutual Funds</button><button onclick="setFilter('adr')" class="filter-btn" data-filter="adr">ADRs</button></div>
+        <select id="filterSelect" onchange="setFilter(this.value)" style="width:200px;padding:10px;margin-bottom:15px;border-radius:5px;background:#1a1a2e;color:#fff;border:1px solid #00fff8;"><option value="all">All Assets</option><option value="stock">Stocks</option><option value="etf">ETFs</option><option value="fund">Mutual Funds</option><option value="adr">ADRs</option></select>
 <input type="text" id="searchInput" placeholder="Search by company name or symbol..." oninput="searchStocks()">
 <div id="search-results" class="search-results"></div>
 </div>
@@ -167,16 +167,9 @@ let searchTimeout;
 
   let currentFilter = 'all';
 
-function setFilter(filter) {
-  currentFilter = filter;
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.remove('active');
-    if(btn.dataset.filter === filter) btn.classList.add('active');
-  });
-  // Re-trigger search if there's a query
-  const input = document.getElementById('searchInput');
-  if(input && input.value.trim()) searchStocks();
-}
+170
+  (filter) currentFilter = filter; const input = document.getElementById('searchInput'); if(input && input.value.trim()) searchStocks();51
+  
 async function searchStocks(){
 clearTimeout(searchTimeout);
 const query=document.getElementById('searchInput').value.trim();
