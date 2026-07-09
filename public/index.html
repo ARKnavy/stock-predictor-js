@@ -168,7 +168,11 @@ let searchTimeout;
   let currentFilter = 'all';
 
 170
-  (filter) currentFilter = filter; const input = document.getElementById('searchInput'); if(input && input.value.trim()) searchStocks();51
+  function setFilter(filter) {
+              currentFilter = filter;
+              const input = document.getElementById('searchInput');
+              if(input && input.value.trim()) searchStocks();
+            }
   
 async function searchStocks(){
 clearTimeout(searchTimeout);
